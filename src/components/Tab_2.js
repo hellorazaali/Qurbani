@@ -429,6 +429,15 @@ const Tab_2 = (props) => {
             alert("Sorry for the inconvenience, We Are facing some issues from Server");
         }
     }
+
+
+    const [file, setFile] = useState(null);
+    const handleFileChange = (e) => {
+        const selectedFile = e.target.files[0];
+        setFile(selectedFile);
+        props.uploadImage(selectedFile);
+    }    
+    console.log('filefile',file)
     return (
         <>
 
@@ -450,9 +459,9 @@ const Tab_2 = (props) => {
                         <input onChange={addSlash} type='text' name='expiry_date' id='expiry_date' placeholder='MM / YY' maxLength={5} required />
                         <label htmlFor='card_code'>Card Code <span>*</span></label>
                         <input type='text' name='card_code' id='card_code' placeholder='CVC' maxLength={3} required /> */}
-                        <label htmlFor="attachement">Upload Screen Shot for Proof:</label>
-                        <input type='file' id='attachement' {...register("attachment")} />
-                        <button className="continue" type='submit'>Continue to shopping</button>
+                        <label htmlFor="attachment">Upload Screen Shot for Proof:</label>
+                        <input type='file' id='attachment' onChange={handleFileChange}/>
+                        <button className="continue" disabled={props.loading} type='submit'>{props.loading == true ? 'wait your order is processing': 'Submit Order' }</button>
 
                     </form>
                 </div>
@@ -798,7 +807,7 @@ const Tab_2 = (props) => {
 
                                 <div className='row if-not'>
                                     <p>If the product/quantity is not available Add multiple choice option</p>
-                                    <select {...register("if-not")} >
+                                    <select {...register("if_not")} >
                                         <option value={"Remove it from my order"}>Remove it from my order</option>
                                         <option value={"Cancel my order"}>Cancel my order</option>
                                         <option value={"Call and confirm"}>Call and confirm</option>
